@@ -1,0 +1,16 @@
+langgraph>=0.2.0
+langchain-anthropic
+langchain-openai
+langchain-core
+sentence-transformers
+chromadb
+psycopg2-binary
+redis
+fastapi
+uvicorn
+numpy
+scikit-learn
+sqlalchemy
+pydantic>=2.0
+python-dotenv
+streamlit

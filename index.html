@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnFlow — Beyond Procedures, Towards Principles</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        barbie: '#FF3EA5',
+                        coral: '#FF6B6B',
+                        blonde: '#FFF0A0',
+                        malibu: '#87CEEB',
+                        foam: '#FFFBF8',
+                        sandy: '#F5E6D3',
+                        tan: '#8B5E3C',
+                        jet: '#1A1A1A'
+                    },
+                    fontFamily: {
+                        display: ['Playfair Display', 'serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                        sans: ['DM Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #FFFBF8;
+            color: #8B5E3C;
+        }
+        
+        .drift-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; box-shadow: 0 0 16px rgba(255, 62, 165, 0.2); }
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 32px rgba(255, 62, 165, 0.45); }
+        }
+        
+        .drift-glow-active {
+            animation: glow-coral 1s infinite alternate ease-in-out;
+        }
+        @keyframes glow-coral {
+            0% { box-shadow: 0 0 16px rgba(255, 107, 107, 0.4); }
+            100% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.8); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-sandy/50 border-b border-sandy px-6 py-4 flex items-center justify-between sticky top-0 z-50 backdrop-blur-md">
+        <div class="flex items-center gap-2 cursor-pointer" onclick="showScreen('landing')">
+            <span class="text-2xl">🌊</span>
+            <span class="font-poppins font-bold text-jet tracking-tight text-xl">LearnFlow</span>
+        </div>
+        <div class="flex items-center gap-6">
+            <button onclick="showScreen('landing')" class="text-tan hover:text-barbie font-poppins font-medium transition-colors">Home</button>
+            <button onclick="viewSession()" class="text-tan hover:text-barbie font-poppins font-medium transition-colors">Session</button>
+            <button onclick="showScreen('profile')" class="text-tan hover:text-barbie font-poppins font-medium transition-colors">Profile</button>
+            <button onclick="startSession()" class="bg-barbie hover:bg-barbie/90 text-white font-poppins font-medium px-5 py-2 rounded-full transition-all hover:scale-105 shadow-md">
+                Start Session →
+            </button>
+        </div>
+    </nav>
+
+
+
+    <!-- MAIN SCREENS CONTAINER -->
+    <main class="flex-grow">
+        
+        <!-- SCREEN 1: LANDING -->
+        <section id="screen-landing" class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h1 class="font-display text-6xl md:text-7xl font-bold text-jet leading-tight italic">
+                    The exam doesn't reward knowing. <br>It rewards <span class="text-barbie not-italic">thinking.</span>
+                </h1>
+                <p class="text-lg text-tan max-w-lg leading-relaxed">
+                    JEE/NEET prep designed around your brain, not a textbook. 8 cooperative AI agents keeping you honest. Zero answer-giving. All principle.
+                </p>
+                <div class="flex items-center gap-4 pt-4">
+                    <button onclick="startSession()" class="bg-barbie hover:bg-barbie/90 text-white font-poppins font-semibold px-8 py-4 rounded-full text-lg shadow-lg hover:scale-105 active:scale-95 transition-all">
+                        Start for Free →
+                    </button>
+                    <button onclick="showScreen('profile')" class="border-2 border-barbie text-barbie hover:bg-barbie/5 font-poppins font-semibold px-8 py-4 rounded-full text-lg transition-all">
+                        View Profile
+                    </button>
+                </div>
+            </div>
+            
+            <!-- SVG Agent Web -->
+            <div class="flex justify-center relative">
+                <svg width="450" height="450" viewBox="0 0 500 500" class="max-w-full">
+                    <!-- Grid background circles -->
+                    <circle cx="250" cy="250" r="180" fill="none" stroke="#F5E6D3" stroke-width="2" stroke-dasharray="5,5" />
+                    <circle cx="250" cy="250" r="100" fill="none" stroke="#F5E6D3" stroke-width="1" />
+                    
+                    <!-- Link lines -->
+                    <line x1="250" y1="250" x2="250" y2="70" stroke="#FF3EA5" stroke-width="2" opacity="0.6" />
+                    <line x1="250" y1="250" x2="430" y2="250" stroke="#FF3EA5" stroke-width="2" opacity="0.6" />
+                    <line x1="250" y1="250" x2="250" y2="430" stroke="#FF3EA5" stroke-width="2" opacity="0.6" />
+                    <line x1="250" y1="250" x2="70" y2="250" stroke="#FF3EA5" stroke-width="2" opacity="0.6" />
+                    
+                    <!-- Inactive links to outer nodes -->
+                    <line x1="250" y1="70" x2="430" y2="250" stroke="#87CEEB" stroke-width="1.5" opacity="0.4" />
+                    <line x1="430" y1="250" x2="250" y2="430" stroke="#87CEEB" stroke-width="1.5" opacity="0.4" />
+                    <line x1="250" y1="430" x2="70" y2="250" stroke="#87CEEB" stroke-width="1.5" opacity="0.4" />
+                    <line x1="70" y1="250" x2="250" y2="70" stroke="#87CEEB" stroke-width="1.5" opacity="0.4" />
+                    
+                    <!-- Nodes -->
+                    <!-- Orchestrator (center) -->
+                    <circle cx="250" cy="250" r="28" fill="#FF3EA5" class="animate-pulse" />
+                    <text x="250" y="295" font-family="Poppins" font-size="11" font-weight="bold" fill="#1A1A1A" text-anchor="middle">ORCHESTRATOR</text>
+                    
+                    <!-- Socratic (Top) -->
+                    <circle cx="250" cy="70" r="20" fill="#87CEEB" />
+                    <text x="250" y="42" font-family="Poppins" font-size="10" font-weight="bold" fill="#8B5E3C" text-anchor="middle">SOCRATIC</text>
+                    
+                    <!-- Gap Explainer (Right) -->
+                    <circle cx="430" cy="250" r="20" fill="#FF6B6B" />
+                    <text x="430" y="222" font-family="Poppins" font-size="10" font-weight="bold" fill="#8B5E3C" text-anchor="middle">GAP EXPLAINER</text>
+                    
+                    <!-- Closure (Bottom) -->
+                    <circle cx="250" cy="430" r="20" fill="#FF3EA5" />
+                    <text x="250" y="468" font-family="Poppins" font-size="10" font-weight="bold" fill="#8B5E3C" text-anchor="middle">CLOSURE CHECK</text>
+                    
+                    <!-- Cinema (Left) -->
+                    <circle cx="70" cy="250" r="20" fill="#FFF0A0" stroke="#8B5E3C" stroke-width="1" />
+                    <text x="70" y="222" font-family="Poppins" font-size="10" font-weight="bold" fill="#8B5E3C" text-anchor="middle">CONCEPT CINEMA</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: SESSION (THREE PANELS) -->
+        <section id="screen-session" class="hidden max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-[calc(100vh-73px)] border-t border-sandy">
+            
+            <!-- Left Sidebar (3 Cols) -->
+            <div class="lg:col-span-3 bg-sandy/20 border-r border-sandy p-6 flex flex-col justify-between">
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between">
+                        <span class="font-poppins font-bold text-sm tracking-wider text-barbie uppercase">active session</span>
+                        <span id="session-timer" class="font-mono text-xs text-tan bg-sandy px-2 py-1 rounded-full">00:00:00</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-sandy">
+                        <div class="text-xs text-tan font-poppins font-semibold uppercase tracking-wider mb-1">current chapter</div>
+                        <div class="text-jet font-poppins font-bold text-lg">Laws of Motion</div>
+                    </div>
+                    
+                    <!-- Agent Roster -->
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-poppins font-bold text-xs tracking-wider text-tan uppercase">agent roster</span>
+                            <span class="text-[10px] text-tan italic">Click agent for details</span>
+                        </div>
+                        <div class="space-y-2">
+                            <!-- Socratic -->
+                            <div id="roster-socratic" class="flex items-center gap-3 p-3 bg-white rounded-xl border border-barbie shadow-sm cursor-pointer transition-colors" onclick="showAgentDetail('socratic')">
+                                <span class="agent-dot w-3 h-3 rounded-full bg-malibu animate-ping"></span>
+                                <div class="flex-grow">
+                                    <span class="font-poppins font-semibold text-sm text-jet block">Socratic Agent</span>
+                                    <span class="agent-status text-xs text-barbie block font-semibold">Active - Diagram Gate</span>
+                                </div>
+                            </div>
+                            <!-- Gap Explainer -->
+                            <div id="roster-gap_explainer" class="flex items-center gap-3 p-3 bg-sandy/10 rounded-xl cursor-pointer hover:bg-sandy/25 transition-colors" onclick="showAgentDetail('gap_explainer')">
+                                <span class="agent-dot w-3 h-3 rounded-full bg-coral"></span>
+                                <div class="flex-grow">
+                                    <span class="font-poppins font-semibold text-sm text-tan block">Gap Explainer</span>
+                                    <span class="agent-status text-xs text-tan block">Waiting</span>
+                                </div>
+                            </div>
+                            <!-- Closure -->
+                            <div id="roster-closure" class="flex items-center gap-3 p-3 bg-sandy/10 rounded-xl cursor-pointer hover:bg-sandy/25 transition-colors" onclick="showAgentDetail('closure')">
+                                <span class="agent-dot w-3 h-3 rounded-full bg-barbie"></span>
+                                <div class="flex-grow">
+                                    <span class="font-poppins font-semibold text-sm text-tan block">Closure Agent</span>
+                                    <span class="agent-status text-xs text-tan block">Waiting</span>
+                                </div>
+                            </div>
+                            <!-- Cinema -->
+                            <div id="roster-cinema" class="flex items-center gap-3 p-3 bg-sandy/10 rounded-xl cursor-pointer hover:bg-sandy/25 transition-colors" onclick="showAgentDetail('cinema')">
+                                <span class="agent-dot w-3 h-3 rounded-full bg-blonde border border-tan"></span>
+                                <div class="flex-grow">
+                                    <span class="font-poppins font-semibold text-sm text-tan block">Concept Cinema</span>
+                                    <span class="agent-status text-xs text-tan block">Waiting</span>
+                                </div>
+                            </div>
+                            <!-- Anti-Overing -->
+                            <div id="roster-anti_overing" class="flex items-center gap-3 p-3 bg-sandy/10 rounded-xl cursor-pointer hover:bg-sandy/25 transition-colors" onclick="showAgentDetail('anti_overing')">
+                                <span class="agent-dot w-3 h-3 rounded-full bg-green-500"></span>
+                                <div class="flex-grow">
+                                    <span class="font-poppins font-semibold text-sm text-tan block">Anti-Overing</span>
+                                    <span class="agent-status text-xs text-tan block">Waiting</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Student Profile Snapshot (moved to left sidebar) -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-sandy space-y-3 mt-6">
+                    <span class="font-poppins font-bold text-xs tracking-wider text-tan uppercase block">learner profile</span>
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-poppins font-semibold">
+                                <span class="text-jet">Derivation-first</span>
+                                <span class="text-barbie">78%</span>
+                            </div>
+                            <div class="w-full bg-sandy/40 h-2 rounded-full overflow-hidden">
+                                <div class="bg-barbie h-full rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-poppins font-semibold">
+                                <span class="text-jet">Laws of Motion Gaps</span>
+                                <span class="text-barbie">40%</span>
+                            </div>
+                            <div class="w-full bg-sandy/40 h-2 rounded-full overflow-hidden">
+                                <div class="bg-barbie h-full rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2 flex flex-wrap gap-1.5">
+                        <span class="bg-blonde text-tan text-[10px] font-poppins font-bold uppercase tracking-wide px-2 py-1 rounded-full">✓ FBDs</span>
+                        <span class="bg-sandy/30 text-tan text-[10px] font-poppins font-bold uppercase tracking-wide px-2 py-1 rounded-full">✓ Energy</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Center Chat (9 Cols) -->
+            <div class="lg:col-span-9 flex flex-col justify-between h-[calc(100vh-73px)] bg-foam">
+                <div id="chat-messages" class="flex-grow overflow-y-auto p-6 space-y-6">
+                    <!-- Default start message -->
+                    <div class="flex gap-4 items-start max-w-[85%]">
+                        <div class="bg-white p-5 rounded-2xl rounded-tl-none border border-sandy/80 shadow-sm space-y-2">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-malibu"></span>
+                                <span class="text-xs font-poppins font-bold text-barbie uppercase tracking-wider">Socratic Agent</span>
+                            </div>
+                            <p class="text-jet leading-relaxed">
+                                Welcome to the session on <strong class="text-barbie">Laws of Motion</strong>! Let's start with your problem. What is the problem giving you, and what is it asking for?
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Input Bar -->
+                <div class="p-6 border-t border-sandy/60 bg-foam">
+                    <form onsubmit="sendMessage(event)" class="relative flex items-center">
+                        <input id="chat-input" type="text" placeholder="Describe your thinking — what do you see in this problem?" class="w-full bg-white border border-sandy rounded-full py-4 pl-6 pr-16 text-jet placeholder-tan/60 focus:outline-none focus:border-barbie focus:ring-4 focus:ring-barbie/10 transition-all font-medium">
+                        <button type="submit" class="absolute right-3 bg-barbie hover:bg-barbie/90 text-white rounded-full p-2.5 hover:scale-105 active:scale-95 transition-all shadow-md">
+                            <svg class="w-5 h-5 transform rotate-90" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: PROFILE -->
+        <section id="screen-profile" class="hidden max-w-4xl mx-auto px-6 py-16 space-y-8">
+            <h2 class="font-poppins font-bold text-3xl text-jet">Your Learning Profile</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Left panel stats -->
+                <div class="bg-white rounded-3xl p-6 border border-sandy shadow-sm space-y-6">
+                    <h3 class="font-poppins font-semibold text-lg text-jet">Depth & Preferences</h3>
+                    <div class="space-y-4">
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-sm font-semibold">
+                                <span>Derivation-first vs. Application-first</span>
+                                <span class="text-barbie">78%</span>
+                            </div>
+                            <div class="w-full bg-sandy/30 h-3 rounded-full overflow-hidden">
+                                <div class="bg-barbie h-full rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-sm font-semibold">
+                                <span>Socratic Dialogue Pacing</span>
+                                <span class="text-barbie">65%</span>
+                            </div>
+                            <div class="w-full bg-sandy/30 h-3 rounded-full overflow-hidden">
+                                <div class="bg-barbie h-full rounded-full" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel gaps -->
+                <div class="bg-white rounded-3xl p-6 border border-sandy shadow-sm space-y-6">
+                    <h3 class="font-poppins font-semibold text-lg text-jet">Top Breaking Points & Gaps</h3>
+                    <ul class="space-y-3 text-sm font-medium">
+                        <li class="flex items-start gap-2">
+                            <span class="text-coral">✦</span>
+                            <span>Sign conventions in rotating frames (Newton's Laws)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-coral">✦</span>
+                            <span>Pseudo-force direction vectors (Inertial vs Non-Inertial)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-coral">✦</span>
+                            <span>Conservation of energy boundary conditions (Spring setups)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-sandy/30 border-t border-sandy py-8 text-center text-xs text-tan font-poppins tracking-wider">
+        LEARNFLOW — TRAINING PRINCIPLES, NOT PROCEDURES. DESIGNED FOR THE BEACH. 🌊🎀
+    </footer>
+
+    <!-- Agent Detail Modal -->
+    <div id="agent-detail-modal" class="hidden fixed inset-0 bg-jet/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-foam border-2 border-barbie rounded-[32px] p-6 max-w-sm w-full shadow-2xl relative space-y-4">
+            <button onclick="closeAgentDetail()" class="absolute top-4 right-4 text-tan hover:text-barbie font-bold text-xl">✕</button>
+            <div class="flex items-center gap-2">
+                <span id="detail-dot" class="w-3 h-3 rounded-full"></span>
+                <h3 id="detail-name" class="font-poppins font-bold text-lg text-jet">Socratic Agent</h3>
+            </div>
+            <hr class="border-sandy">
+            <div class="space-y-2 text-sm">
+                <div><span class="text-tan font-poppins text-xs uppercase tracking-wider block">Role</span> <span id="detail-role" class="font-medium text-jet">Entry Protocol + Diagram Gate</span></div>
+                <div><span class="text-tan font-poppins text-xs uppercase tracking-wider block">Anchor Rule</span> <span id="detail-anchor" class="font-medium italic text-barbie">"Every response ends with a question mark."</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Frontend logic script -->
+    <script>
+        const API_BASE = "http://localhost:8000";
+        let currentSessionId = null;
+        let timerInterval = null;
+        let secondsElapsed = 0;
+
+        const agents = {
+            socratic: { name: "Socratic Agent", color: "bg-malibu", status: "Active - Diagram Gate" },
+            gap_explainer: { name: "Gap Explainer", color: "bg-coral", status: "Active - Surgical 3-Part" },
+            closure: { name: "Closure Agent", color: "bg-barbie", status: "Active - Verification" },
+            cinema: { name: "Concept Cinema", color: "bg-blonde", status: "Active - 5 Beats Explainer" },
+            anti_overing: { name: "Anti-Overing", color: "bg-green-500", status: "Active - Generalization" }
+        };
+
+        const agentDetails = {
+            socratic: {
+                name: "Socratic Agent",
+                color: "bg-malibu",
+                role: "Entry Protocol + Diagram Gate",
+                risk: "Semantic — slides toward giving answers as conversation history accumulates answer-like patterns.",
+                anchor: "Your output must end with a question mark. You are not allowed to state any physics principle directly.",
+                asi: 0.88
+            },
+            gap_explainer: {
+                name: "Gap Explainer Agent",
+                color: "bg-coral",
+                role: "Surgical 3-part format explanation",
+                risk: "Behavioral — format collapses under long sessions, starts giving full re-explanations.",
+                anchor: "Your response has exactly 3 labeled sections: WHAT YOU KNEW | THE GAP | WHAT IT UNLOCKED. No section exceeds 3 sentences.",
+                asi: 0.92
+            },
+            closure: {
+                name: "Closure Agent",
+                color: "bg-barbie",
+                role: "Open reconstruction check",
+                risk: "Semantic — starts accepting surface answers, treating 'covered' as 'closed'.",
+                anchor: "If the student used the word 'formula' or 'equation' in their explanation without explaining WHY that form, it is not closed.",
+                asi: 0.85
+            },
+            cinema: {
+                name: "Concept Cinema Agent",
+                color: "bg-blonde",
+                role: "Structured conceptual explanation in 5 beats",
+                risk: "Behavioral — beat structure collapses, formula arrives first because LLM defaults to it.",
+                anchor: "The formula must not appear before Beat 4. If you wrote a formula in Beat 1, 2, or 3 — restart.",
+                asi: 0.90
+            },
+            anti_overing: {
+                name: "Anti-Overing Agent",
+                color: "bg-green-500",
+                role: "Generalization and transfer training",
+                risk: "Behavioral — starts validating pattern-matching instead of exposing it.",
+                anchor: "A student getting the right answer by the wrong method is a FAILURE state, not a success state.",
+                asi: 0.94
+            }
+        };
+
+        function showScreen(screenId) {
+            document.getElementById('screen-landing').classList.add('hidden');
+            document.getElementById('screen-session').classList.add('hidden');
+            document.getElementById('screen-profile').classList.add('hidden');
+            
+            document.getElementById('screen-' + screenId).classList.remove('hidden');
+        }
+
+        function viewSession() {
+            if (!currentSessionId) {
+                startSession();
+            } else {
+                showScreen('session');
+            }
+        }
+
+        async function startSession() {
+            try {
+                const response = await fetch(`${API_BASE}/session/start`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        student_id: "student_1",
+                        chapter: "Laws of Motion",
+                        problem_id: "two_block_collision"
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status);
+                }
+                
+                const data = await response.json();
+                currentSessionId = data.session_id;
+                console.log("Real backend session started:", currentSessionId);
+                
+                // Clear chat area
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = "";
+                
+                // Start Session timer
+                resetTimer();
+                startTimer();
+                
+                // Append initial welcome message
+                appendAgentMessage("socratic", "Welcome to your active thinking session! Let's start with your problem. What is the problem giving you, and what is it asking for?");
+                updateActiveAgentInRoster("socratic");
+                
+                showScreen('session');
+            } catch (err) {
+                console.error("Failed to communicate with real backend, fallback to mock mode:", err);
+                currentSessionId = null;
+                
+                // Fallback demo setup
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = "";
+                resetTimer();
+                startTimer();
+                
+                appendAgentMessage("socratic", "Welcome to the session (offline/demo mode). Describe what forces act on the colliding blocks horizontally.");
+                updateActiveAgentInRoster("socratic");
+                
+                showScreen('session');
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const hrs = String(Math.floor(secondsElapsed / 3600)).padStart(2, '0');
+                const mins = String(Math.floor((secondsElapsed % 3600) / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                document.getElementById("session-timer").innerText = `${hrs}:${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function resetTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            secondsElapsed = 0;
+            document.getElementById("session-timer").innerText = "00:00:00";
+        }
+
+        function appendAgentMessage(agentKey, text) {
+            const chatMessages = document.getElementById('chat-messages');
+            const details = agents[agentKey] || agents.socratic;
+            
+            const responseMsg = document.createElement('div');
+            responseMsg.className = "flex gap-4 items-start max-w-[85%]";
+            responseMsg.innerHTML = `
+                <div class="bg-white p-5 rounded-2xl rounded-tl-none border border-sandy/80 shadow-sm space-y-2">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="w-2.5 h-2.5 rounded-full ${details.color}"></span>
+                        <span class="text-xs font-poppins font-bold text-barbie uppercase tracking-wider">${details.name}</span>
+                    </div>
+                    <p class="text-jet leading-relaxed">${text}</p>
+                </div>
+            `;
+            chatMessages.appendChild(responseMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function updateActiveAgentInRoster(activeKey) {
+            Object.keys(agents).forEach(key => {
+                const el = document.getElementById(`roster-${key}`);
+                if (!el) return;
+                const indicator = el.querySelector(".agent-dot");
+                const statusText = el.querySelector(".agent-status");
+                
+                if (key === activeKey) {
+                    el.className = "flex items-center gap-3 p-3 bg-white rounded-xl border border-barbie shadow-sm cursor-pointer transition-colors";
+                    if (indicator) {
+                        indicator.className = `agent-dot w-3 h-3 rounded-full ${agents[key].color} animate-ping`;
+                    }
+                    if (statusText) {
+                        statusText.className = "agent-status text-xs text-barbie block font-semibold";
+                        statusText.innerText = agents[key].status;
+                    }
+                } else {
+                    el.className = "flex items-center gap-3 p-3 bg-sandy/10 rounded-xl cursor-pointer hover:bg-sandy/25 transition-colors";
+                    if (indicator) {
+                        indicator.className = `agent-dot w-3 h-3 rounded-full ${agents[key].color}`;
+                    }
+                    if (statusText) {
+                        statusText.className = "agent-status text-xs text-tan block";
+                        statusText.innerText = "Waiting";
+                    }
+                }
+            });
+        }
+
+
+
+        async function sendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const val = input.value.trim();
+            if (!val) return;
+            
+            // Add student message
+            const chatMessages = document.getElementById('chat-messages');
+            const userMsg = document.createElement('div');
+            userMsg.className = "flex gap-4 items-start justify-end";
+            userMsg.innerHTML = `
+                <div class="bg-barbie text-white p-5 rounded-2xl rounded-tr-none shadow-sm max-w-[85%]">
+                    <p class="leading-relaxed font-medium">${val}</p>
+                </div>
+            `;
+            chatMessages.appendChild(userMsg);
+            
+            input.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Fallback mock logic if no server running
+            if (!currentSessionId) {
+                setTimeout(() => {
+                    appendAgentMessage("socratic", "This is an offline/demo response. Start the FastAPI backend on port 8000 to interact with the real agent network.");
+                }, 1000);
+                return;
+            }
+            
+            // Stream placeholder
+            const agentMsg = document.createElement('div');
+            agentMsg.className = "flex gap-4 items-start max-w-[85%]";
+            agentMsg.innerHTML = `
+                <div class="bg-white p-5 rounded-2xl rounded-tl-none border border-sandy/80 shadow-sm space-y-2 w-full">
+                    <div class="flex items-center gap-2 mb-1 agent-badge-container">
+                        <span class="w-2.5 h-2.5 rounded-full bg-malibu animate-ping"></span>
+                        <span class="text-xs font-poppins font-bold text-barbie uppercase tracking-wider agent-name-label">Thinking...</span>
+                    </div>
+                    <p class="text-jet leading-relaxed agent-text-content"></p>
+                </div>
+            `;
+            chatMessages.appendChild(agentMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            const badgeDot = agentMsg.querySelector(".w-2.5");
+            const badgeLabel = agentMsg.querySelector(".agent-name-label");
+            const textContent = agentMsg.querySelector(".agent-text-content");
+            
+            try {
+                const response = await fetch(`${API_BASE}/session/message`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        session_id: currentSessionId,
+                        text: val
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = "";
+                
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split("\n\n");
+                    buffer = lines.pop();
+                    
+                    for (const line of lines) {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine.startsWith("data: ")) {
+                            const dataStr = trimmedLine.slice(6).trim();
+                            if (dataStr === "[DONE]") {
+                                continue;
+                            }
+                            try {
+                                const data = JSON.parse(dataStr);
+                                if (data.type === "metrics") {
+                                    // Update active agent badge on message
+                                    const agentKey = data.active_agent || "socratic";
+                                    const details = agents[agentKey] || agents.socratic;
+                                    badgeDot.className = `w-2.5 h-2.5 rounded-full ${details.color}`;
+                                    badgeDot.classList.remove("animate-ping");
+                                    badgeLabel.innerText = details.name;
+                                    
+                                    // Update sidebar roster
+                                    updateActiveAgentInRoster(agentKey);
+                                } else if (data.type === "token") {
+                                    textContent.innerText += data.token;
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }
+                            } catch (e) {
+                                console.error("Error parsing JSON:", e);
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error("Fetch streaming error:", err);
+                badgeDot.className = "w-2.5 h-2.5 rounded-full bg-coral";
+                badgeDot.classList.remove("animate-ping");
+                badgeLabel.innerText = "Error";
+                textContent.innerText = "Failed to communicate with the LearnFlow backend. Make sure the backend server is running on http://localhost:8000.";
+            }
+        }
+
+        function showAgentDetail(key) {
+            const detail = agentDetails[key];
+            if (!detail) return;
+            
+            document.getElementById("detail-dot").className = `w-3 h-3 rounded-full ${detail.color}`;
+            document.getElementById("detail-name").innerText = detail.name;
+            document.getElementById("detail-role").innerText = detail.role;
+            document.getElementById("detail-anchor").innerText = `"${detail.anchor}"`;
+            
+            document.getElementById("agent-detail-modal").classList.remove("hidden");
+        }
+
+        function closeAgentDetail() {
+            document.getElementById("agent-detail-modal").classList.add("hidden");
+        }
+    </script>
+</body>
+</html>
